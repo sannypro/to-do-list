@@ -8,23 +8,40 @@ import { useQuery } from 'react-query';
 import { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import auth from './firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { async } from '@firebase/util';
 
 const Home = () => {
-    const { data: note, isLoading, refetch } = useQuery('note', () => axios.get('http://localhost:5000/note'))
-    const [del, setDel] = useState(false)
-    const handleDelete = id => {
-        axios.delete(`http://localhost:5000/note/${id}`)
+    const [user] = useAuthState(auth)
+    const { data: note, isLoading, refetch } = useQuery('note', () => axios.get(`http://localhost:5000/note?email=${user.email}`))
+
+    const handleDelete = async (id) => {
+        await axios.delete(`http://localhost:5000/note/${id}`)
         refetch()
     }
-    const handleSubmit = e => {
+    console.log(note?.data);
+    const handleSubmit = async (e) => {
         e.preventDefault()
         const task = e.target.task.value;
         const description = e.target.description.value;
         const note = {
             task,
-            description
+            description,
+            email: user.email,
+            complete: false
         }
-        axios.post('http://localhost:5000/note', note).then(response => console.log(response.data))
+        await axios.post('http://localhost:5000/note', note).then(response => console.log(response.data))
+        refetch()
+    }
+    const handleComplete = async (id) => {
+        // event.preventDefault();
+        const notes = {
+
+            complete: true
+        }
+        await axios.put(`http://localhost:5000/note/${id}`, notes).then(response => console.log(response.data))
+        refetch()
+
     }
     return (
         <div>
@@ -56,9 +73,10 @@ const Home = () => {
                         {
                             note?.data.map((n, index) => <tr className='text-center' key={note._id}>
                                 <th scope="row">{index + 1}</th>
-                                <td>{del ? <del>{n.task}</del> : <span>{n.task}</span>}</td>
-                                <td>{del ? <del>{n.description}</del> : <span>{n.description}</span>}</td>
-                                <td><button onClick={() => setDel(true)} className='btn btn-success me-5'>Complete</button><button onClick={() => handleDelete(n._id)} className='btn btn-danger'>Delete</button></td>
+
+                                <td>{(n.complete) ? <del>{n.task}</del> : <span>{n.task}</span>}</td>
+                                <td>{n.complete ? <del>{n.description}</del> : <span>{n.description}</span>}</td>
+                                <td><button onClick={() => handleComplete(n._id)} className='btn btn-success me-5'>Complete</button><button onClick={() => handleDelete(n._id)} className='btn btn-danger'>Delete</button></td>
                             </tr>)
                         }
 
