@@ -1,7 +1,7 @@
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { FormControl, InputGroup, ToastContainer } from 'react-bootstrap';
+import { FormControl, InputGroup } from 'react-bootstrap';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 import { useState } from 'react';
@@ -10,7 +10,8 @@ import Login from './Login';
 import Signup from './Signup';
 import RequireAuth from './RequireAuth';
 import Home from './Home';
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 function App() {
 
   return (

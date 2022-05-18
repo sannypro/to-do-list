@@ -10,6 +10,7 @@ import { signOut } from 'firebase/auth';
 import auth from './firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { async } from '@firebase/util';
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const [user] = useAuthState(auth)
@@ -18,6 +19,7 @@ const Home = () => {
     const handleDelete = async (id) => {
         await axios.delete(`http://localhost:5000/note/${id}`)
         refetch()
+
     }
     console.log(note?.data);
     const handleSubmit = async (e) => {
@@ -32,6 +34,7 @@ const Home = () => {
         }
         await axios.post('http://localhost:5000/note', note).then(response => console.log(response.data))
         refetch()
+        toast.success("note added")
     }
     const handleComplete = async (id) => {
         // event.preventDefault();
