@@ -10,14 +10,15 @@ import { signOut } from 'firebase/auth';
 import auth from './firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { async } from '@firebase/util';
+import { Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 const Home = () => {
     const [user] = useAuthState(auth)
-    const { data: note, isLoading, refetch } = useQuery('note', () => axios.get(`http://localhost:5000/note?email=${user.email}`))
+    const { data: note, isLoading, refetch } = useQuery('note', () => axios.get(`https://limitless-cove-21407.herokuapp.com/note?email=${user.email}`))
 
     const handleDelete = async (id) => {
-        await axios.delete(`http://localhost:5000/note/${id}`)
+        await axios.delete(`https://limitless-cove-21407.herokuapp.com/note/${id}`)
         refetch()
         toast.error("Task deleted")
     }
@@ -32,17 +33,18 @@ const Home = () => {
             email: user.email,
             complete: false
         }
-        await axios.post('http://localhost:5000/note', note).then(response => console.log(response.data))
+        await axios.post('https://limitless-cove-21407.herokuapp.com/note', note).then(response => console.log(response.data))
         refetch()
         toast.success("Task added")
     }
+
     const handleComplete = async (id) => {
         // event.preventDefault();
         const notes = {
 
             complete: true
         }
-        await axios.put(`http://localhost:5000/note/${id}`, notes).then(response => console.log(response.data))
+        await axios.put(`https://limitless-cove-21407.herokuapp.com/note/${id}`, notes).then(response => console.log(response.data))
         refetch()
         toast.success('Completed this task')
 
@@ -56,17 +58,17 @@ const Home = () => {
                 To do list
             </h2>
             <form onSubmit={handleSubmit}>
-                <div class="input-group container">
+                <div className="input-group container">
 
 
-                    <input name='task' type="text" placeholder='Task Name' aria-label="task-name" class="form-control me-2" />
-                    <input name='description' type="text" placeholder='Task Description' aria-label="task-description" class="form-control" />
-                    <button type="submits" class=" btn btn-success">Add task</button>
+                    <input name='task' type="text" placeholder='Task Name' aria-label="task-name" className="form-control me-2" />
+                    <input name='description' type="text" placeholder='Task Description' aria-label="task-description" className="form-control" />
+                    <button type="submits" className=" btn btn-success">Add task</button>
 
                 </div>
             </form>
             <div>
-                <table class="table container">
+                <table className="table container">
                     <thead>
                         <tr className='text-center fs-3 text'>
                             <th scope="col">Sl</th>
@@ -76,6 +78,9 @@ const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
+                        {
+                            isLoading && <Spinner className='d-flex justify-content-center align-items-center items-center' animation="border" variant="warning" />
+                        }
                         {
                             note?.data.map((n, index) => <tr className='text-center' key={note._id}>
                                 <th scope="row">{index + 1}</th>
