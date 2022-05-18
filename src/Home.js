@@ -19,7 +19,7 @@ const Home = () => {
     const handleDelete = async (id) => {
         await axios.delete(`http://localhost:5000/note/${id}`)
         refetch()
-        toast.error("Note deleted")
+        toast.error("Task deleted")
     }
     console.log(note?.data);
     const handleSubmit = async (e) => {
@@ -34,7 +34,7 @@ const Home = () => {
         }
         await axios.post('http://localhost:5000/note', note).then(response => console.log(response.data))
         refetch()
-        toast.success("note added")
+        toast.success("Task added")
     }
     const handleComplete = async (id) => {
         // event.preventDefault();
@@ -44,6 +44,7 @@ const Home = () => {
         }
         await axios.put(`http://localhost:5000/note/${id}`, notes).then(response => console.log(response.data))
         refetch()
+        toast.success('Completed this task')
 
     }
     return (
