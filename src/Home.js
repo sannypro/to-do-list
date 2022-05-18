@@ -49,8 +49,10 @@ const Home = () => {
     }
     return (
         <div>
-            <button onClick={() => signOut(auth)} className='btn btn-danger'>Sign Out</button>
-            <h2 className='text-center mt-5 text-primary'>
+            <div className='text-center mt-1'>
+                <button onClick={() => signOut(auth)} className='btn btn-danger '>Sign Out</button>
+            </div>
+            <h2 className='text-center mt-4 text-primary'>
                 To do list
             </h2>
             <form onSubmit={handleSubmit}>
@@ -80,7 +82,8 @@ const Home = () => {
 
                                 <td>{(n.complete) ? <del>{n.task}</del> : <span>{n.task}</span>}</td>
                                 <td>{n.complete ? <del>{n.description}</del> : <span>{n.description}</span>}</td>
-                                <td><button onClick={() => handleComplete(n._id)} className='btn btn-success me-5'>Complete</button><button onClick={() => handleDelete(n._id)} className='btn btn-danger'>Delete</button></td>
+                                <td><div className='d-flex text-center justify-content-center'>
+                                    <button onClick={() => handleComplete(n._id)} className='btn btn-success  me-5'>Complete</button><button onClick={() => handleDelete(n._id)} className='btn btn-danger'>Delete</button></div></td>
                             </tr>)
                         }
 
