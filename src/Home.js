@@ -68,7 +68,7 @@ const Home = () => {
             <div>
                 <table class="table">
                     <thead>
-                        <tr className='text-center'>
+                        <tr className='text-center fs-3 text'>
                             <th scope="col">Sl</th>
                             <th scope="col">Task</th>
                             <th scope="col">Description</th>
@@ -80,8 +80,8 @@ const Home = () => {
                             note?.data.map((n, index) => <tr className='text-center' key={note._id}>
                                 <th scope="row">{index + 1}</th>
 
-                                <td>{(n.complete) ? <del>{n.task}</del> : <span>{n.task}</span>}</td>
-                                <td>{n.complete ? <del>{n.description}</del> : <span>{n.description}</span>}</td>
+                                <td className={n.complete && 'text-success fw-lighter'}>{(n.complete) ? <del>{n.task}</del> : <span className='fw-bold'>{n.task}</span>}</td>
+                                <td className={n.complete && 'text-success fw-lighter'}>{n.complete ? <del>{n.description}</del> : <span className='fw-bold'>{n.description}</span>}</td>
                                 <td><div className='d-flex text-center justify-content-center'>
                                     <button onClick={() => handleComplete(n._id)} className='btn btn-success  me-5'>Complete</button><button onClick={() => handleDelete(n._id)} className='btn btn-danger'>Delete</button></div></td>
                             </tr>)
