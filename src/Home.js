@@ -59,14 +59,14 @@ const Home = () => {
                 <div class="input-group container">
 
 
-                    <input name='task' type="text" placeholder='Task Name' aria-label="task-name" class="form-control" />
+                    <input name='task' type="text" placeholder='Task Name' aria-label="task-name" class="form-control me-2" />
                     <input name='description' type="text" placeholder='Task Description' aria-label="task-description" class="form-control" />
                     <button type="submits" class=" btn btn-success">Add task</button>
 
                 </div>
             </form>
             <div>
-                <table class="table">
+                <table class="table container">
                     <thead>
                         <tr className='text-center fs-3 text'>
                             <th scope="col">Sl</th>
