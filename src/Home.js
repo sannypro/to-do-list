@@ -19,7 +19,7 @@ const Home = () => {
     const handleDelete = async (id) => {
         await axios.delete(`http://localhost:5000/note/${id}`)
         refetch()
-
+        toast.error("Note deleted")
     }
     console.log(note?.data);
     const handleSubmit = async (e) => {
