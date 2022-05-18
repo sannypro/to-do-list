@@ -1,0 +1,17 @@
+.google-auth {
+
+    border-radius: 5px;
+    font-size: 15px;
+    display: flex;
+
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    color: #1e90c2;
+    font-size: 18px;
+
+}
+
+.cursor {
+    cursor: pointer;
+}
